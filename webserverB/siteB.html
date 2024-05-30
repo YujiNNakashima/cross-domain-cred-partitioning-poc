@@ -1,0 +1,43 @@
+<!-- Site B - login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site B - Login</title>
+    <script>
+        async function login() {
+            // Perform login and get token (simulated here)
+            // const token = 'example_auth_token';
+            // localStorage.setItem('siteB_token', token);
+            // document.getElementById('tokenDisplay').innerText = token; 
+            // alert('Logged in successfully. You can now close this tab.');
+
+            const token = 'example_auth_token';
+            localStorage.setItem('siteB_token', token);
+
+            const response = await fetch('http://localhost:8083/store-token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ key: 'user123', token: token })
+            });
+
+            if (response.ok) {
+                alert('Logged in and token stored successfully. You can now close this tab.');
+            } else {
+                alert('Failed to store the token.');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Login to Site B</h1>
+    <button onclick="login()">Log In</button>
+    <div>
+        <h2>Token:</h2>
+        <p id="tokenDisplay"></p> 
+    </div>
+</body>
+</html>

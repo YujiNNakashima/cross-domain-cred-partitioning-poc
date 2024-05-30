@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site A</title>
+    <script>
+        async function fetchToken() {
+            try {
+                const response = await fetch('http://localhost:8083/get-token', {
+                    method: 'GET',
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log(data)
+                    localStorage.setItem('siteB_token', data.token);
+                    return data.token;
+                } else {
+                    throw new Error('Failed to fetch token');
+                }
+            } catch (error) {
+                console.error('Error fetching token:', error);
+                return null;
+            }
+        }
+
+        async function checkLogin() {
+            let token = localStorage.getItem('siteB_token');
+            if (!token) {
+                token = await fetchToken();
+                if (!token) {
+                    alert('Failed to obtain token');
+                    return;
+                }
+            }
+
+            const iframe = document.getElementById('siteB_iframe');
+            iframe.onload = function () {
+                iframe.contentWindow.postMessage({ token: token }, '*');
+            };
+            iframe.src = 'http://127.0.0.1:8081/siteB.html';
+        }
+    </script>
+</head>
+<body onload="checkLogin()">
+    <iframe id="siteB_iframe" width="100%" height="600px"></iframe>
+</body>
+</html>

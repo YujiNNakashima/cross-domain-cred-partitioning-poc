@@ -6,6 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Site B - Login</title>
     <script>
+
+        window.addEventListener('message', (event) => {
+                    if (event.origin !== 'http://127.0.0.1:8081') {
+                        console.warn('Received message from unknown origin:', event.origin);
+                        return;
+                    }
+
+                    const { token } = event.data;
+
+                    if (token) {
+                        console.log('Received token:', token);
+                        localStorage.setItem(credentials, event.data)
+                        // Proceed with your logic using the received token
+                    } else {
+                        console.error('No token received');
+                    }
+                });
+
         async function login() {
 
             const token = 'example_auth_token';
@@ -27,7 +45,6 @@
         }
     </script>
 </head>
-<body>
     <h1>Login to Site B</h1>
     <button onclick="login()">Log In</button>
     <div>

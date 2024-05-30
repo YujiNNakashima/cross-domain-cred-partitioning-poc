@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site A</title>
+    <title>Dynamics</title>
     <script>
         async function fetchToken() {
             try {
@@ -16,8 +16,7 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    console.log(data)
-                    // localStorage.setItem('siteB_token', data.token);
+                    console.log('api response: ', data)
                     return data.token;
                 } else {
                     throw new Error('Failed to fetch token');
@@ -47,6 +46,7 @@
     </script>
 </head>
 <body onload="checkLogin()">
+    <h1>Dynamics</h1>
     <iframe id="siteB_iframe" width="100%" height="600px"></iframe>
 </body>
 </html>

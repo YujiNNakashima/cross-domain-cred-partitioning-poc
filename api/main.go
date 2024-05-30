@@ -20,10 +20,6 @@ type TokenRequest struct {
 	Token string `json:"token"`
 }
 
-type GetTokenRequest struct {
-	Racf string `json:"racf"`
-}
-
 func main() {
 	redisAddr := os.Getenv("REDIS_ADDR")
 	if redisAddr == "" {
